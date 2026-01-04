@@ -11,13 +11,7 @@ pipeline = PredictionPipeline()
 def home():
     return render_template("index.html")
 
-@app.route("/train", methods=["POST"])
-def train():
-    try:
-        os.system("python main.py")
-        return "✅ Training completed successfully!"
-    except Exception as e:
-        return f"❌ Error occurred: {e}"
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
