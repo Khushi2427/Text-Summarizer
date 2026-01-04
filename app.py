@@ -4,6 +4,9 @@ from textSummarizer.pipeline.prediction import PredictionPipeline
 
 app = Flask(__name__)
 
+# 🔥 Load model ONCE (very important for Render)
+pipeline = PredictionPipeline()
+
 @app.route("/", methods=["GET"])
 def home():
     return render_template("index.html")
@@ -20,8 +23,7 @@ def train():
 def predict():
     try:
         text = request.form["text"]
-        obj = PredictionPipeline()
-        summary = obj.predict(text)
+        summary = pipeline.predict(text)
 
         return render_template(
             "index.html",
@@ -32,4 +34,5 @@ def predict():
         return f"❌ Error occurred: {e}"
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
