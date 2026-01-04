@@ -21,4 +21,5 @@ Jinja2==3.1.2
 python-box
 ensure
 evaluate
+flask
 -e .
